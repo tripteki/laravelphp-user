@@ -8,7 +8,7 @@ Getting Started
 Installation :
 
 ```
-$ composer require tripteki/laravelphp-user
+composer require tripteki/laravelphp-user
 ```
 
 How to use it :
@@ -24,7 +24,7 @@ php artisan vendor:publish --tag=tripteki-laravelphp-user-migrations
 - Migrate.
 
 ```
-$ php artisan migrate
+php artisan migrate
 ```
 
 - Sample :
