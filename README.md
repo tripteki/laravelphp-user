@@ -50,7 +50,9 @@ base_path("app/Http/Controllers/Admin/User")
 Usage
 ---
 
-`php artisan adminer:install:user`
+`php artisan adminer:install:user` and put `App\Console\Commands\GenerateUserCommand::class` to register kernel.
+<br /><br />
+`php artisan adminer:generate:user`
 
 Author
 ---

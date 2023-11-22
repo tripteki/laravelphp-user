@@ -41,6 +41,8 @@ class InstallCommand extends Command
     {
         $this->installStack();
 
+        $this->generateSuperuser();
+
         return 0;
     }
 
@@ -53,6 +55,8 @@ class InstallCommand extends Command
         (new Filesystem)->copy(__DIR__."/../../../stubs/routes/admin/user.php", base_path("routes/admin/user.php"));
         $this->helper->putRoute("api.php", "admin/user.php");
 
+        (new Filesystem)->ensureDirectoryExists(app_path("Console/Commands"));
+        (new Filesystem)->copyDirectory(__DIR__."/../../../stubs/app/Console/Commands", app_path("Console/Commands"));
         (new Filesystem)->ensureDirectoryExists(app_path("Http/Controllers/Admin/User"));
         (new Filesystem)->copyDirectory(__DIR__."/../../../stubs/app/Http/Controllers/Admin/User", app_path("Http/Controllers/Admin/User"));
         (new Filesystem)->ensureDirectoryExists(app_path("Imports/Users"));
@@ -64,5 +68,18 @@ class InstallCommand extends Command
         (new Filesystem)->ensureDirectoryExists(app_path("Http/Responses"));
 
         $this->info("Adminer User scaffolding installed successfully.");
+    }
+
+    /**
+     * @return void
+     */
+    protected function generateSuperuser()
+    {
+        if (in_array("App\Console\Commands\GenerateUserCommand", array_values(app(\Illuminate\Contracts\Console\Kernel::class)->all()))) {
+
+            $this->call("adminer:generate:user", [ "--superuser" => true, ]);
+
+            $this->info("Adminer SuperUser generated successfully.");
+        }
     }
 };

@@ -45,7 +45,6 @@ class UserServiceProvider extends ServiceProvider
 
         $this->registerPublishers();
         $this->registerCommands();
-        $this->registerMigrations();
     }
 
     /**
