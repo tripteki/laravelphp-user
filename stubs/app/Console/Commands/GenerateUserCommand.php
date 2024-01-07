@@ -59,15 +59,17 @@ class GenerateUserCommand extends Command
 
             if (class_exists("Tripteki\ACL\Providers\ACLServiceProvider")) {
 
-                $name = \Tripteki\ACL\Providers\ACLServiceProvider::SUPERUSER;
+                $name = \Tripteki\ACL\Providers\ACLServiceProvider::$SUPERUSER;
                 $email = $name."@mail.com";
                 $password = Str::random(8);
 
                 $user = $this->generateUser($name, $email, $password);
 
+                $superadmin = \Tripteki\ACL\Providers\ACLServiceProvider::$SUPERADMIN;
+
                 $repository = app(\Tripteki\ACL\Contracts\Repository\IACLRepository::class);
                 $repository->setUser($user);
-                $repository->grantAs($name);
+                $repository->grantAs($superadmin);
             }
         }
 
